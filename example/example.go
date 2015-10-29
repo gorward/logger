@@ -7,10 +7,6 @@ import (
 	"time"
 )
 
-type Foo struct {
-	Animal string
-}
-
 var log *logger.Logger
 
 func main() {
