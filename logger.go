@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net"
 	"net/http"
 	"os"
 	"time"
@@ -150,13 +151,15 @@ func (l *Logger) Info(msg string, data Data) {
 }
 
 func (l *Logger) Access(startTime time.Time, w http.ResponseWriter, r *http.Request) {
+	ip, _, _ := net.SplitHostPort(r.RemoteAddr)
+
 	al := AccessLog{
 		Time:           startTime,
 		Protocol:       r.Proto,
 		HTTPStatusCode: 200,
 		ResponseTime:   time.Since(startTime),
 		UserAgent:      r.UserAgent(),
-		IP:             "123.123.123.123",
+		IP:             ip,
 		Method:         r.Method,
 		URL:            r.URL.String(),
 	}
